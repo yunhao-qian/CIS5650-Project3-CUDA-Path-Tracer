@@ -365,26 +365,21 @@ __host__ __device__ LightSample sampleCubeLight(const Geom& cube, const Material
     float totalArea = 2.0f * (areaXY + areaXZ + areaYZ);
     
     // Cumulative probabilities for area-weighted face selection
-    float probXY = 2.0f * areaXY / totalArea;  // faces 4,5 (+Z,-Z)
     float probXZ = 2.0f * areaXZ / totalArea;  // faces 2,3 (+Y,-Y) 
     float probYZ = 2.0f * areaYZ / totalArea;  // faces 0,1 (+X,-X)
-    
+
     float rnd = u01(rng);
     int face;
-    float faceArea;
     
     if (rnd < probYZ) {
         // Sample +X or -X face
         face = (u01(rng) < 0.5f) ? 0 : 1;
-        faceArea = areaYZ;
     } else if (rnd < probYZ + probXZ) {
         // Sample +Y or -Y face
         face = (u01(rng) < 0.5f) ? 2 : 3;
-        faceArea = areaXZ;
     } else {
         // Sample +Z or -Z face
         face = (u01(rng) < 0.5f) ? 4 : 5;
-        faceArea = areaXY;
     }
     
     // Random point within face
