@@ -46,3 +46,18 @@ __host__ __device__ void scatterRay(
     glm::vec3 normal,
     const Material& m,
     thrust::default_random_engine& rng);
+
+/**
+ * Sample direct lighting from emissive objects in the scene.
+ * Returns the direct lighting contribution for the given hit point.
+ */
+__host__ __device__ glm::vec3 sampleDirectLighting(
+    glm::vec3 hitPoint,
+    glm::vec3 normal,
+    Material hitMaterial,
+    Geom* geoms,
+    int numGeoms,
+    Triangle* triangles,
+    int numTriangles,
+    Material* materials,
+    thrust::default_random_engine& rng);

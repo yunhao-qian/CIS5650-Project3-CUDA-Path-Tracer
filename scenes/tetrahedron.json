@@ -22,11 +22,10 @@
             "TYPE":"Diffuse",
             "RGB":[0.35, 0.85, 0.35]
         },
-        "specular_white":
+        "triangle_material":
         {
-            "TYPE":"Specular",
-            "RGB":[0.98, 0.98, 0.98],
-            "ROUGHNESS":0.0
+            "TYPE":"Diffuse",
+            "RGB":[0.35, 0.35, 0.85]
         }
     },
     "Camera":
@@ -35,13 +34,34 @@
         "FOVY":45.0,
         "ITERATIONS":5000,
         "DEPTH":8,
-        "FILE":"cornell",
+        "FILE":"tetrahedron",
         "EYE":[0.0,5.0,10.5],
         "LOOKAT":[0.0,5.0,0.0],
         "UP":[0.0,1.0,0.0],
-        "LENS_RADIUS":0.2,
+        "LENS_RADIUS":0.0,
         "FOCAL_DISTANCE":8.0
     },
+    "Meshes":
+    [
+        {
+            "MATERIAL":"triangle_material",
+            "vertices": [
+                0.0, 2.0, 0.0,
+                -1.5, 0.0, 1.0,
+                1.5, 0.0, 1.0,
+                0.0, 0.0, -2.0
+            ],
+            "triangles": [
+                0, 1, 2,
+                0, 2, 3,
+                0, 3, 1,
+                1, 3, 2
+            ],
+            "TRANS":[0.0, 3.0, 0.0],
+            "ROTAT":[0.0, 0.0, 0.0],
+            "SCALE":[1.0, 1.0, 1.0]
+        }
+    ],
     "Objects":
     [
         {
@@ -88,10 +108,10 @@
         },
         {
             "TYPE":"sphere",
-            "MATERIAL":"specular_white",
-            "TRANS":[-1.0,4.0,-1.0],
+            "MATERIAL":"diffuse_white",
+            "TRANS":[-2.0,2.0,-1.0],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[3.0,3.0,3.0]
+            "SCALE":[1.5,1.5,1.5]
         }
     ]
 }

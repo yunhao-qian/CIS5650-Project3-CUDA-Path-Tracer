@@ -111,3 +111,87 @@ __host__ __device__ float sphereIntersectionTest(
 
     return glm::length(r.origin - intersectionPoint);
 }
+
+/**
+ * Fast ray-AABB intersection test for BVH traversal.
+ * Uses the slab method for efficient intersection testing.
+ */
+__host__ __device__ bool rayBoxIntersect(
+    Ray ray,
+    glm::vec3 minBounds,
+    glm::vec3 maxBounds)
+{
+    glm::vec3 invDir = 1.0f / ray.direction;
+    glm::vec3 t1 = (minBounds - ray.origin) * invDir;
+    glm::vec3 t2 = (maxBounds - ray.origin) * invDir;
+    
+    glm::vec3 tmin = glm::min(t1, t2);
+    glm::vec3 tmax = glm::max(t1, t2);
+    
+    float tenter = glm::max(glm::max(tmin.x, tmin.y), tmin.z);
+    float texit = glm::min(glm::min(tmax.x, tmax.y), tmax.z);
+    
+    return tenter <= texit && texit > 0.0f;
+}
+
+/**
+ * Ray-triangle intersection using the Möller-Trumbore algorithm.
+ * Fast, efficient algorithm that directly computes barycentric coordinates.
+ */
+__host__ __device__ float rayTriangleIntersect(
+    Ray ray,
+    Triangle triangle,
+    glm::vec3 &intersectionPoint,
+    glm::vec3 &normal,
+    bool &outside)
+{
+    // Use EPSILON from utilities.h (0.00001f)
+    
+    // Get triangle edges
+    glm::vec3 edge1 = triangle.v1 - triangle.v0;
+    glm::vec3 edge2 = triangle.v2 - triangle.v0;
+    
+    // Begin calculating determinant - also used to calculate U parameter
+    glm::vec3 h = glm::cross(ray.direction, edge2);
+    float a = glm::dot(edge1, h);
+    
+    // If determinant is near zero, ray lies in plane of triangle
+    if (a > -EPSILON && a < EPSILON) {
+        return -1.0f;  // No intersection
+    }
+    
+    float f = 1.0f / a;
+    glm::vec3 s = ray.origin - triangle.v0;
+    float u = f * glm::dot(s, h);
+    
+    // Check if intersection point lies outside triangle
+    if (u < 0.0f || u > 1.0f) {
+        return -1.0f;
+    }
+    
+    glm::vec3 q = glm::cross(s, edge1);
+    float v = f * glm::dot(ray.direction, q);
+    
+    // Check if intersection point lies outside triangle
+    if (v < 0.0f || u + v > 1.0f) {
+        return -1.0f;
+    }
+    
+    // Calculate t to find where the intersection point is on the line
+    float t = f * glm::dot(edge2, q);
+    
+    if (t > EPSILON) { // Ray intersection
+        intersectionPoint = ray.origin + t * ray.direction;
+        normal = triangle.normal;
+        outside = glm::dot(ray.direction, normal) < 0.0f;
+        
+        // If ray hits backface, flip normal
+        if (!outside) {
+            normal = -normal;
+        }
+        
+        return t;
+    }
+    
+    return -1.0f;  // Line intersection but not ray intersection
+}
