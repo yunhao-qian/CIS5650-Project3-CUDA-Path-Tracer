@@ -567,10 +567,11 @@ __host__ __device__ glm::vec3 sampleDirectLighting(
                         // For simplicity, approximate BSDF PDF as 1/PI for Lambertian surfaces
                         float lightPdf = lightSample.pdf / float(numLights); // Adjusted for light selection
                         float bsdfPdf = 1.0f / PI; // Lambertian BSDF PDF
-                        float misWeight = lightPdf / (lightPdf + bsdfPdf);
+                        float misWeight = 1.0f; //lightPdf / (lightPdf + bsdfPdf);
                         
                         // Apply MIS weight to prevent double-counting
-                        directContribution += lightContribution * float(numLights) * misWeight;
+                        directContribution += lightContribution * float(numLights) * misWeight /
+                            glm::max(lightSample.pdf, 0.0001f);
                     }
                 }
                 break;

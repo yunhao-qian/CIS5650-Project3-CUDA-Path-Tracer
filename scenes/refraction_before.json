@@ -5,7 +5,7 @@
         {
             "TYPE":"Emitting",
             "RGB":[1.0, 1.0, 1.0],
-            "EMITTANCE":5.0
+            "EMITTANCE":10.0
         },
         "diffuse_white":
         {
@@ -24,35 +24,35 @@
         },
         "glass":
         {
-            "TYPE":"Refractive",
+            "TYPE":"Diffuse",
             "RGB":[0.95, 0.95, 0.95],
             "IOR":1.5,
             "ABSORPTION_DISTANCE":10.0
         },
         "green_glass":
         {
-            "TYPE":"Refractive",
+            "TYPE":"Diffuse",
             "RGB":[0.9, 1.0, 0.9],
             "IOR":1.5,
             "ABSORPTION":[0.1, 0.05, 0.1]
         },
         "blue_glass":
         {
-            "TYPE":"Refractive",
+            "TYPE":"Diffuse",
             "RGB":[0.9, 0.95, 1.0],
             "IOR":1.5,
             "ABSORPTION":[0.15, 0.1, 0.05]
         },
         "water":
         {
-            "TYPE":"Refractive",
+            "TYPE":"Diffuse",
             "RGB":[0.9, 0.95, 1.0],
             "IOR":1.33,
             "ABSORPTION_DISTANCE":50.0
         },
         "diamond":
         {
-            "TYPE":"Refractive",
+            "TYPE":"Diffuse",
             "RGB":[0.98, 0.98, 1.0],
             "IOR":2.42,
             "ABSORPTION_DISTANCE":100.0
@@ -62,7 +62,7 @@
     {
         "RES":[800,800],
         "FOVY":45.0,
-        "ITERATIONS":5000,
+        "ITERATIONS":1024,
         "DEPTH":8,
         "FILE":"refraction_test",
         "EYE":[0.0,5.0,10.5],
@@ -78,35 +78,35 @@
             "MATERIAL":"light",
             "TRANS":[0.0,10.0,0.0],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[3.0,0.3,3.0]
+            "SCALE":[5.0,0.5,5.0]
         },
         {
             "TYPE":"cube",
             "MATERIAL":"diffuse_white",
             "TRANS":[0.0,0.0,0.0],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[10.0,0.01,10.0]
+            "SCALE":[20.0,0.01,20.0]
         },
         {
             "TYPE":"cube",
             "MATERIAL":"diffuse_white",
             "TRANS":[0.0,5.0,-9.99],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[10.0,10.0,0.01]
+            "SCALE":[20.0,20.0,0.01]
         },
         {
             "TYPE":"cube",
             "MATERIAL":"diffuse_red",
             "TRANS":[-9.99,5.0,0.0],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[0.01,10.0,10.0]
+            "SCALE":[0.01,20.0,20.0]
         },
         {
             "TYPE":"cube",
             "MATERIAL":"diffuse_green",
             "TRANS":[9.99,5.0,0.0],
             "ROTAT":[0.0,0.0,0.0],
-            "SCALE":[0.01,10.0,10.0]
+            "SCALE":[0.01,20.0,20.0]
         },
         {
             "TYPE":"sphere",

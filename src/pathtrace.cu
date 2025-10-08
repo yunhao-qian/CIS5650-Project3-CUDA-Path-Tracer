@@ -521,6 +521,7 @@ __global__ void shadeMaterial(
                 pathSegments[idx].remainingBounces--; // Decrement bounces
                 glm::vec3 intersect = getPointOnRay(pathSegments[idx].ray, intersection.t);
                 
+#if true // Toggle this to enable/disable direct lighting.
                 // Add direct lighting contribution (only for non-emissive materials)
                 if (material.emittance <= 0.0f) {
                     glm::vec3 directLighting = sampleDirectLighting(
@@ -538,7 +539,8 @@ __global__ void shadeMaterial(
                     // Accumulate direct lighting contribution
                     pathSegments[idx].accumulated_radiance += pathSegments[idx].current_throughput * directLighting;
                 }
-                
+#endif
+
                 scatterRay(pathSegments[idx], intersect, intersection.surfaceNormal, material, rng);
             }
             // If there was no intersection, color the ray black.
