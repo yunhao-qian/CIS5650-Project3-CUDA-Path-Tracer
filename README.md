@@ -13,6 +13,8 @@
 
 ## Overview
 
+https://github.com/user-attachments/assets/15c436f7-9033-4ab4-8b65-7b9e0446731f
+
 This project implements an interactive path tracer using CUDA. The program loads a scene file that describes the camera, geometry, materials, and lights, then renders the scene with path tracing to produce realistic lighting. This process is interactive: users can adjust the camera position, orientation, and zoom with the mouse. When the camera is fixed, the image is progressively refined by accumulating samples over time.
 
 The general idea of path tracing is to simulate how light interacts with surfaces, but to do so by tracing paths **from the camera into the scene** (often called "backward" relative to the direction photons travel). Each path bounces around the scene until it reaches a light source, "escapes" from the scene, or is terminated. A pixel's color is estimated from the light that reaches the camera along these paths. Averaging more samples per pixel reduces noise. The sampling can be made more efficient with direct lighting (see below).
